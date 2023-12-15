@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .task-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">ToDo List</h2>
+            </div>
+            <div class="card-body">
+                <ul class="list-group" id="tasks"></ul>
+            </div>
+            <div class="card-footer">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="taskInput" placeholder="Add a new task">
+                    <div class="input-group-append">
+                        <button class="btn btn-success" onclick="addTask()">Add Task</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function addTask() {
+            var taskInput = document.getElementById("taskInput");
+            var taskText = taskInput.value.trim();
+
+            if (taskText === "") {
+                alert("Please enter a task.");
+                return;
+            }
+
+            var taskList = document.getElementById("tasks");
+
+            // Create a new list item with Bootstrap classes
+            var newTask = document.createElement("li");
+            newTask.className = "list-group-item task-list-item";
+
+            // Create a checkbox
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.className = "mr-3";
+
+            // Create a text node to describe the task
+            var taskTextNode = document.createTextNode(taskText);
+
+            // Create button "Delete"
+            var deleteButton = document.createElement("button");
+            deleteButton.className = "btn btn-danger";
+            deleteButton.innerHTML = "Delete";
+
+            // Add an event handler to the "Delete" button
+            deleteButton.onclick = function() {
+                deleteTask(newTask);
+            };
+
+            // Adding a checkbox, text node and Delete button to a list item
+            newTask.appendChild(checkbox);
+            newTask.appendChild(taskTextNode);
+            newTask.appendChild(deleteButton);
+
+            // Adding a new task to the task list
+            taskList.appendChild(newTask);
+
+            // Clearing the input field
+            taskInput.value = "";
+        }
+
+        function deleteTask(item) {
+            var taskList = document.getElementById("tasks");
+            taskList.removeChild(item);
+        }
+    </script>
+</body>
+</html>
